@@ -2,13 +2,33 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Laporan & Koordinasi - Guru Wali SMK</title>
+    <title>Laporan & Koordinasi - SIM Guru Wali</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Pengaturan khusus saat dicetak/export PDF */
+        @media print {
+            aside, button, .no-print {
+                display: none !important;
+            }
+            main {
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            body {
+                background: white !important;
+            }
+            .print-container {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+        }
+    </style>
 </head>
 <body class="bg-gray-50 font-sans">
     <div class="flex h-screen overflow-hidden">
         <!-- SIDEBAR -->
-        <aside class="w-64 bg-white border-r flex flex-col justify-between">
+        <aside class="w-64 bg-white border-r flex flex-col justify-between no-print">
             <div class="p-6">
                 <h1 class="text-xl font-bold text-blue-600">SIM Guru Wali</h1>
                 <p class="text-xs text-gray-500 mt-1">SMKN 1 Bangil</p>
@@ -27,15 +47,152 @@
 
         <!-- KONTEN UTAMA -->
         <main class="flex-1 overflow-y-auto p-8">
-            <h2 class="text-2xl font-bold text-gray-800">Laporan & Koordinasi</h2>
-            <p class="text-gray-600 mt-1">Rekapitulasi berkala untuk Wali Kelas, Guru BK, dan Orang Tua.</p>
-            
-            <div class="bg-white rounded-xl border shadow-sm mt-6 p-6">
-                <h3 class="font-bold text-gray-700 mb-4">Cetak / Ekspor Rekapitulasi</h3>
-                <p class="text-sm text-gray-600 mb-4">Unduh laporan perkembangan kelompok bimbingan X DKV 1 & 2 untuk dilaporkan kepada manajemen sekolah.</p>
-                <button onclick="window.print()" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700">Cetak Laporan (PDF)</button>
+            <div class="max-w-4xl mx-auto bg-white rounded-xl border shadow-sm p-8 print-container">
+                
+                <!-- KOP LAPORAN (Hanya tampil saat dicetak/dilihat) -->
+                <div class="text-center border-b pb-4 mb-6">
+                    <h2 class="text-xl font-bold text-gray-800 uppercase">Laporan Rekapitulasi Pembinaan Guru Wali</h2>
+                    <p class="text-sm text-gray-600">SMKN 1 Bangil - Tahun Pelajaran 2026/2027</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mb-6 text-sm bg-gray-50 p-4 rounded-lg">
+                    <div>
+                        <p><strong>Nama Guru Wali:</strong> ABD. KHOLIQ, S.Kom</p>
+                        <p><strong>Kelas Binaan:</strong> X DKV 1 & X DKV 2</p>
+                    </div>
+                    <div>
+                        <p><strong>Jumlah Peserta Didik:</strong> 24 Siswa</p>
+                        <p><strong>Tanggal Cetak:</strong> <span id="tanggalCetak"></span></p>
+                    </div>
+                </div>
+
+                <h3 class="font-bold text-gray-800 mb-3">1. Rekapitulasi Rencana Karir Siswa (BMW)</h3>
+                <div class="grid grid-cols-3 gap-4 mb-6 text-center">
+                    <div class="p-3 bg-blue-50 border border-blue-100 rounded-lg">
+                        <p class="text-xs text-blue-600 font-medium">Bekerja</p>
+                        <p id="statBekerja" class="text-xl font-bold text-blue-800">0</p>
+                    </div>
+                    <div class="p-3 bg-green-50 border border-green-100 rounded-lg">
+                        <p class="text-xs text-green-600 font-medium">Kuliah</p>
+                        <p id="statKuliah" class="text-xl font-bold text-green-800">0</p>
+                    </div>
+                    <div class="p-3 bg-purple-50 border border-purple-100 rounded-lg">
+                        <p class="text-xs text-purple-600 font-medium">Wirausaha</p>
+                        <p id="statWirausaha" class="text-xl font-bold text-purple-800">0</p>
+                    </div>
+                </div>
+
+                <h3 class="font-bold text-gray-800 mb-3">2. Daftar Rekapitulasi Pemetaan Siswa</h3>
+                <div class="overflow-x-auto mb-8">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="border-b bg-gray-100 text-gray-700">
+                                <th class="p-2 border">No</th>
+                                <th class="p-2 border">Nama Siswa</th>
+                                <th class="p-2 border">Kelas</th>
+                                <th class="p-2 border">Gaya Belajar</th>
+                                <th class="p-2 border">Rencana Karir</th>
+                                <th class="p-2 border">Minat / Kendala Catatan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelRekapLaporan">
+                            <!-- Dimuat via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- TOMBOL CETAK -->
+                <div class="flex justify-between items-center no-print border-t pt-4">
+                    <p class="text-xs text-gray-500">Klik tombol di samping untuk mengunduh atau mencetak laporan ke PDF.</p>
+                    <button onclick="window.print()" class="bg-blue-600 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 shadow flex items-center gap-2">
+                        🖨️ Cetak Laporan (PDF)
+                    </button>
+                </div>
+
+                <!-- TANDA TANGAN (Format Cetak) -->
+                <div class="hidden print:flex justify-between mt-12 text-sm text-center">
+                    <div>
+                        <p>Mengetahui,</p>
+                        <p>Kepala SMKN 1 Bangil</p>
+                        <br><br><br>
+                        <p class="font-bold underline">___________________________</p>
+                        <p>NIP. ...................................</p>
+                    </div>
+                    <div>
+                        <p>Pasuruan, <span id="tglTtd"></span></p>
+                        <p>Guru Wali / Pembimbing</p>
+                        <br><br><br>
+                        <p class="font-bold underline">ABD. KHOLIQ, S.Kom</p>
+                        <p>NIP. ...................................</p>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
+
+    <script>
+        const defaultSiswa = [
+            { id: 1, no: 1, nama: "DIVA HIDAYATUS SOLIKHA", nis: "13932/0563.10", kelas: "X DKV 1", gayaBelajar: "Visual", rencanaKarir: "Bekerja", minat: "Desain Grafis", kendala: "Manajemen waktu" },
+            { id: 2, no: 2, nama: "DWI MEILANI SYAFITRI", nis: "13933/0564.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik", rencanaKarir: "Kuliah", minat: "Ilustrasi", kendala: "Kurang percaya diri" },
+            { id: 3, no: 3, nama: "DWI TIRTA MAULANA", nis: "13934/0565.10", kelas: "X DKV 1", gayaBelajar: "Auditorial", rencanaKarir: "Wirausaha", minat: "Videografi", kendala: "Absensi" },
+            { id: 4, no: 4, nama: "EDLA PUTRI APRILA", nis: "13935/0566.10", kelas: "X DKV 1", gayaBelajar: "Visual", rencanaKarir: "Bekerja", minat: "Desain Karakter", kendala: "Tidak ada" },
+            { id: 5, no: 5, nama: "ELVIERA NATASYA MULIA HAMID", nis: "13936/0567.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik", rencanaKarir: "Kuliah", minat: "Fotografi", kendala: "Fokus mudah teralihkan" },
+            { id: 6, no: 6, nama: "FADIA ZAFIRAH", nis: "13937/0568.10", kelas: "X DKV 1", gayaBelajar: "Visual", rencanaKarir: "Bekerja", minat: "Editor Video", kendala: "Teori perlu bimbingan" },
+            { id: 7, no: 7, nama: "FADILATUN NIKMAH", nis: "13938/0569.10", kelas: "X DKV 1", gayaBelajar: "Auditorial", rencanaKarir: "Wirausaha", minat: "Desain Poster", kendala: "Pemalu" },
+            { id: 8, no: 8, nama: "FAIQOTUL HIMMAH", nis: "13939/0570.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik", rencanaKarir: "Kuliah", minat: "Animasi 2D", kendala: "Kendala perangkat" },
+            { id: 9, no: 9, nama: "FAJARIAN JUNO DJIBRIL", nis: "13940/0571.10", kelas: "X DKV 1", gayaBelajar: "Visual", rencanaKarir: "Bekerja", minat: "UI/UX", kendala: "Sering izin" },
+            { id: 10, no: 10, nama: "FAUZIAH NUR AISYAH", nis: "13941/0572.10", kelas: "X DKV 1", gayaBelajar: "Auditorial", rencanaKarir: "Kuliah", minat: "Ilustrasi", kendala: "Percaya diri" },
+            { id: 11, no: 11, nama: "FAZA NAYLA IKRIMAH", nis: "13942/0573.10", kelas: "X DKV 1", gayaBelajar: "Visual", rencanaKarir: "Wirausaha", minat: "Desain Grafis", kendala: "Manajemen waktu" },
+            { id: 12, no: 12, nama: "FELLY CALISTA AINI", nis: "13943/0574.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik", rencanaKarir: "Bekerja", minat: "Fotografi", kendala: "Fokus" },
+            { id: 13, no: 13, nama: "FHANYSA AQILAH RAHMADANI", nis: "13944/0575.10", kelas: "X DKV 2", gayaBelajar: "Visual", rencanaKarir: "Kuliah", minat: "Web Design", kendala: "Aman" },
+            { id: 14, no: 14, nama: "GITA REZANIA", nis: "13945/0576.10", kelas: "X DKV 2", gayaBelajar: "Auditorial", rencanaKarir: "Bekerja", minat: "Video Editing", kendala: "Teliti" },
+            { id: 15, no: 15, nama: "IDA AYU AZIZAH", nis: "13946/0577.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik", rencanaKarir: "Wirausaha", minat: "Ilustrasi", kendala: "Terlambat" },
+            { id: 16, no: 16, nama: "JIHAN KHUMAIROH", nis: "13947/0578.10", kelas: "X DKV 2", gayaBelajar: "Visual", rencanaKarir: "Bekerja", minat: "Desain", kendala: "Tugas" },
+            { id: 17, no: 17, nama: "JOFANI ACHMAD ALFACHRIZI", nis: "13948/0579.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik", rencanaKarir: "Bekerja", minat: "Videografi", kendala: "Fokus" },
+            { id: 18, no: 18, nama: "KHANSA SALSABILAH ABIDAH", nis: "13949/0580.10", kelas: "X DKV 2", gayaBelajar: "Visual", rencanaKarir: "Kuliah", minat: "Animasi", kendala: "Pemalu" },
+            { id: 19, no: 19, nama: "KHAYLA NAAFI MARITZA", nis: "13950/0581.10", kelas: "X DKV 2", gayaBelajar: "Auditorial", rencanaKarir: "Wirausaha", minat: "Fotografi", kendala: "Aman" },
+            { id: 20, no: 20, nama: "LISAH ARIANTI", nis: "13951/0582.10", kelas: "X DKV 2", gayaBelajar: "Visual", rencanaKarir: "Bekerja", minat: "Poster", kendala: "Percaya diri" },
+            { id: 21, no: 21, nama: "LISAURA MAULIDINA AZZAHRA", nis: "13952/0583.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik", rencanaKarir: "Kuliah", minat: "Ilustrasi", kendala: "Waktu" },
+            { id: 22, no: 22, nama: "M WILDAN FAUZUL KABIR", nis: "13953/0584.10", kelas: "X DKV 2", gayaBelajar: "Visual", rencanaKarir: "Bekerja", minat: "Videografi", kendala: "Izin" },
+            { id: 23, no: 23, nama: "M. RIZKY PRATAMA PUTRA", nis: "13954/0585.10", kelas: "X DKV 2", gayaBelajar: "Auditorial", rencanaKarir: "Wirausaha", minat: "Desain", kendala: "Teliti" },
+            { id: 24, no: 24, nama: "MELISA AYU RAHMADANI", nis: "13955/0586.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik", rencanaKarir: "Bekerja", minat: "Animasi", kendala: "Aman" }
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            let dataSiswa = JSON.parse(localStorage.getItem("dataSiswaGuruWali")) || defaultSiswa;
+            
+            // Tanggal hari ini
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const tglStr = new Date().toLocaleDateString('id-ID', options);
+            document.getElementById("tanggalCetak").innerText = tglStr;
+            document.getElementById("tglTtd").innerText = tglStr;
+
+            // Hitung statistik BMW
+            let countBekerja = dataSiswa.filter(s => s.rencanaKarir === "Bekerja").length;
+            let countKuliah = dataSiswa.filter(s => s.rencanaKarir === "Kuliah").length;
+            let countWirausaha = dataSiswa.filter(s => s.rencanaKarir === "Wirausaha").length;
+
+            document.getElementById("statBekerja").innerText = countBekerja;
+            document.getElementById("statKuliah").innerText = countKuliah;
+            document.getElementById("statWirausaha").innerText = countWirausaha;
+
+            // Render tabel rekap
+            const tbody = document.getElementById("tabelRekapLaporan");
+            tbody.innerHTML = "";
+            dataSiswa.forEach((siswa, index) => {
+                let tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td class="p-2 border text-center">${index + 1}</td>
+                    <td class="p-2 border font-medium">${siswa.nama}</td>
+                    <td class="p-2 border text-center">${siswa.kelas}</td>
+                    <td class="p-2 border">${siswa.gayaBelajar || '-'}</td>
+                    <td class="p-2 border font-semibold text-blue-700">${siswa.rencanaKarir || 'Bekerja'}</td>
+                    <td class="p-2 border">Minat: ${siswa.minat || '-'}<br><span class="text-red-600">Kendala: ${siswa.kendala || '-'}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        });
+    </script>
 </body>
 </html>
