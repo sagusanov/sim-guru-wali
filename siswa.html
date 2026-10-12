@@ -56,48 +56,83 @@
         </main>
     </div>
 
-    <!-- MODAL DETAIL SISWA -->
-    <div id="modalDetail" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-xl max-w-lg w-full p-6 shadow-xl">
+    <!-- MODAL DETAIL & PEMETAAN SISWA -->
+    <div id="modalDetail" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-xl max-w-2xl w-full p-6 shadow-xl my-8">
             <div class="flex justify-between items-center mb-4 border-b pb-3">
-                <h3 class="text-lg font-bold text-gray-800">Profil & Catatan Bimbingan Siswa</h3>
+                <h3 class="text-lg font-bold text-gray-800">Profil & Pemetaan Kebutuhan Siswa</h3>
                 <button onclick="tutupModal()" class="text-gray-400 hover:text-gray-600 font-bold text-lg">&times;</button>
             </div>
-            <div id="isiModal" class="space-y-3 text-sm text-gray-600 mb-6">
-                <!-- Diisi via JavaScript -->
-            </div>
-            <div class="flex justify-end">
-                <button onclick="tutupModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700">Tutup</button>
-            </div>
+            
+            <form id="formPemetaan" onsubmit="simpanProfil(event)">
+                <input type="hidden" id="siswaId">
+                <div class="space-y-4 text-sm text-gray-600 mb-6">
+                    <div class="bg-blue-50 p-3 rounded-lg">
+                        <p><strong>Nama Lengkap:</strong> <span id="modalNama">-</span></p>
+                        <p><strong>NIS / NISN:</strong> <span id="modalNis">-</span> | <strong>Kelas:</strong> <span id="modalKelas">-</span></p>
+                    </div>
+
+                    <!-- Input Pemetaan -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-medium text-gray-700 mb-1">Gaya Belajar</label>
+                            <select id="inputGayaBelajar" class="w-full border rounded-lg p-2 text-sm focus:ring focus:ring-blue-200">
+                                <option value="Visual (Melihat/Gambar)">Visual (Melihat/Gambar)</option>
+                                <option value="Auditorial (Mendengar)">Auditorial (Mendengar)</option>
+                                <option value="Kinestetik (Praktik/Gerak)">Kinestetik (Praktik/Gerak)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-medium text-gray-700 mb-1">Minat & Bakat</label>
+                            <input type="text" id="inputMinat" placeholder="Misal: Desain Grafis, Fotografi" class="w-full border rounded-lg p-2 text-sm focus:ring focus:ring-blue-200">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-medium text-gray-700 mb-1">Potensi & Kelebihan</label>
+                        <textarea id="inputPotensi" rows="2" placeholder="Catat potensi kelebihan siswa..." class="w-full border rounded-lg p-2 text-sm focus:ring focus:ring-blue-200"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block font-medium text-gray-700 mb-1 text-red-600">Kendala / Catatan Awal</label>
+                        <textarea id="inputKendala" rows="2" placeholder="Kendala belajar atau sosial..." class="w-full border rounded-lg p-2 text-sm focus:ring focus:ring-blue-200"></textarea>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2 border-t pt-3">
+                    <button type="button" onclick="tutupModal()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-300">Batal</button>
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700">Simpan Perubahan</button>
+                </div>
+            </form>
         </div>
     </div>
 
     <script>
         const defaultSiswa = [
-            { id: 1, no: 1, nama: "DIVA HIDAYATUS SOLIKHA", nis: "13932/0563.10", kelas: "X DKV 1" },
-            { id: 2, no: 2, nama: "DWI MEILANI SYAFITRI", nis: "13933/0564.10", kelas: "X DKV 1" },
-            { id: 3, no: 3, nama: "DWI TIRTA MAULANA", nis: "13934/0565.10", kelas: "X DKV 1" },
-            { id: 4, no: 4, nama: "EDLA PUTRI APRILA", nis: "13935/0566.10", kelas: "X DKV 1" },
-            { id: 5, no: 5, nama: "ELVIERA NATASYA MULIA HAMID", nis: "13936/0567.10", kelas: "X DKV 1" },
-            { id: 6, no: 6, nama: "FADIA ZAFIRAH", nis: "13937/0568.10", kelas: "X DKV 1" },
-            { id: 7, no: 7, nama: "FADILATUN NIKMAH", nis: "13938/0569.10", kelas: "X DKV 1" },
-            { id: 8, no: 8, nama: "FAIQOTUL HIMMAH", nis: "13939/0570.10", kelas: "X DKV 1" },
-            { id: 9, no: 9, nama: "FAJARIAN JUNO DJIBRIL", nis: "13940/0571.10", kelas: "X DKV 1" },
-            { id: 10, no: 10, nama: "FAUZIAH NUR AISYAH", nis: "13941/0572.10", kelas: "X DKV 1" },
-            { id: 11, no: 11, nama: "FAZA NAYLA IKRIMAH", nis: "13942/0573.10", kelas: "X DKV 1" },
-            { id: 12, no: 12, nama: "FELLY CALISTA AINI", nis: "13943/0574.10", kelas: "X DKV 1" },
-            { id: 13, no: 1, nama: "FHANYSA AQILAH RAHMADANI", nis: "13944/0575.10", kelas: "X DKV 2" },
-            { id: 14, no: 2, nama: "GITA REZANIA", nis: "13945/0576.10", kelas: "X DKV 2" },
-            { id: 15, no: 3, nama: "IDA AYU AZIZAH", nis: "13946/0577.10", kelas: "X DKV 2" },
-            { id: 16, no: 4, nama: "JIHAN KHUMAIROH", nis: "13947/0578.10", kelas: "X DKV 2" },
-            { id: 17, no: 5, nama: "JOFANI ACHMAD ALFACHRIZI", nis: "13948/0579.10", kelas: "X DKV 2" },
-            { id: 18, no: 6, nama: "KHANSA SALSABILAH ABIDAH", nis: "13949/0580.10", kelas: "X DKV 2" },
-            { id: 19, no: 7, nama: "KHAYLA NAAFI MARITZA", nis: "13950/0581.10", kelas: "X DKV 2" },
-            { id: 20, no: 8, nama: "LISAH ARIANTI", nis: "13951/0582.10", kelas: "X DKV 2" },
-            { id: 21, no: 9, nama: "LISAURA MAULIDINA AZZAHRA", nis: "13952/0583.10", kelas: "X DKV 2" },
-            { id: 22, no: 10, nama: "M WILDAN FAUZUL KABIR", nis: "13953/0584.10", kelas: "X DKV 2" },
-            { id: 23, no: 11, nama: "M. RIZKY PRATAMA PUTRA", nis: "13954/0585.10", kelas: "X DKV 2" },
-            { id: 24, no: 12, nama: "MELISA AYU RAHMADANI", nis: "13955/0586.10", kelas: "X DKV 2" }
+            { id: 1, no: 1, nama: "DIVA HIDAYATUS SOLIKHA", nis: "13932/0563.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Desain Grafis", potensi: "Kreativitas visual baik", kendala: "Manajemen waktu tugas" },
+            { id: 2, no: 2, nama: "DWI MEILANI SYAFITRI", nis: "13933/0564.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Ilustrasi Digital", potensi: "Tekun dalam praktik", kendala: "Kurang percaya diri" },
+            { id: 3, no: 3, nama: "DWI TIRTA MAULANA", nis: "13934/0565.10", kelas: "X DKV 1", gayaBelajar: "Auditorial (Mendengar)", minat: "Videografi", potensi: "Komunikasi aktif", kendala: "Absensi sering terlambat" },
+            { id: 4, no: 4, nama: "EDLA PUTRI APRILA", nis: "13935/0566.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Desain Karakter", potensi: "Rapi dalam pengerjaan tugas", kendala: "Belum ada kendala berarti" },
+            { id: 5, no: 5, nama: "ELVIERA NATASYA MULIA HAMID", nis: "13936/0567.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Fotografi", potensi: "Cepat memahami materi", kendala: "Fokus mudah teralihkan" },
+            { id: 6, no: 6, nama: "FADIA ZAFIRAH", nis: "13937/0568.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Editor Video", potensi: "Disiplin tinggi", kendala: "Perlu bimbingan intensif teori" },
+            { id: 7, no: 7, nama: "FADILATUN NIKMAH", nis: "13938/0569.10", kelas: "X DKV 1", gayaBelajar: "Auditorial (Mendengar)", minat: "Desain Poster", potensi: "Kerjasama tim baik", kendala: "Pemalu saat presentasi" },
+            { id: 8, no: 8, nama: "FAIQOTUL HIMMAH", nis: "13939/0570.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Animasi 2D", potensi: "Inisiatif tinggi", kendala: "Kendala perangkat di rumah" },
+            { id: 9, no: 9, nama: "FAJARIAN JUNO DJIBRIL", nis: "13940/0571.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", minat: "UI/UX Design", potensi: "Analitis kuat", kendala: "Sering izin sakit" },
+            { id: 10, no: 10, nama: "FAUZIAH NUR AISYAH", nis: "13941/0572.10", kelas: "X DKV 1", gayaBelajar: "Auditorial (Mendengar)", minat: "Ilustrasi", potensi: "Teliti dan rapi", kendala: "Kurang percaya diri" },
+            { id: 11, no: 11, nama: "FAZA NAYLA IKRIMAH", nis: "13942/0573.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Desain Grafis", potensi: "Kreatif", kendala: "Manajemen waktu" },
+            { id: 12, no: 12, nama: "FELLY CALISTA AINI", nis: "13943/0574.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Fotografi", potensi: "Cekatan", kendala: "Fokus belajar" },
+            { id: 13, no: 13, nama: "FHANYSA AQILAH RAHMADANI", nis: "13944/0575.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Desain Web", potensi: "Mandiri", kendala: "Tidak ada" },
+            { id: 14, no: 14, nama: "GITA REZANIA", nis: "13945/0576.10", kelas: "X DKV 2", gayaBelajar: "Auditorial (Mendengar)", minat: "Video Editing", potensi: "Komunikatif", kendala: "Kurang teliti" },
+            { id: 15, no: 15, nama: "IDA AYU AZIZAH", nis: "13946/0577.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Ilustrasi", potensi: "Tekun", kendala: "Sering terlambat" },
+            { id: 16, no: 16, nama: "JIHAN KHUMAIROH", nis: "13947/0578.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Desain Grafis", potensi: "Rapi", kendala: "Kendala tugas" },
+            { id: 17, no: 17, nama: "JOFANI ACHMAD ALFACHRIZI", nis: "13948/0579.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Videografi", potensi: "Aktif praktik", kendala: "Fokus kurang" },
+            { id: 18, no: 18, nama: "KHANSA SALSABILAH ABIDAH", nis: "13949/0580.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Animasi", potensi: "Kreatif tinggi", kendala: "Pemalu" },
+            { id: 19, no: 19, nama: "KHAYLA NAAFI MARITZA", nis: "13950/0581.10", kelas: "X DKV 2", gayaBelajar: "Auditorial (Mendengar)", minat: "Fotografi", potensi: "Kerjasama baik", kendala: "Tidak ada" },
+            { id: 20, no: 20, nama: "LISAH ARIANTI", nis: "13951/0582.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Desain Poster", potensi: "Tekun", kendala: "Kurang percaya diri" },
+            { id: 21, no: 21, nama: "LISAURA MAULIDINA AZZAHRA", nis: "13952/0583.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Ilustrasi Digital", potensi: "Inovatif", kendala: "Manajemen waktu" },
+            { id: 22, no: 22, nama: "M WILDAN FAUZUL KABIR", nis: "13953/0584.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Videografi", potensi: "Aktif", kendala: "Sering izin" },
+            { id: 23, no: 23, nama: "M. RIZKY PRATAMA PUTRA", nis: "13954/0585.10", kelas: "X DKV 2", gayaBelajar: "Auditorial (Mendengar)", minat: "Desain Grafis", potensi: "Cepat tanggap", kendala: "Kurang teliti" },
+            { id: 24, no: 24, nama: "MELISA AYU RAHMADANI", nis: "13955/0586.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Animasi", potensi: "Rajin", kendala: "Tidak ada" }
         ];
 
         function muatDataSiswa() {
@@ -113,7 +148,7 @@
                     <td class="p-3 text-gray-600">${siswa.nis}</td>
                     <td class="p-3"><span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-semibold">${siswa.kelas}</span></td>
                     <td class="p-3">
-                        <button onclick='bukaDetail(${JSON.stringify(siswa)})' class="text-blue-600 hover:underline font-medium text-xs">Detail</button>
+                        <button onclick='bukaDetail(${JSON.stringify(siswa)})' class="text-blue-600 hover:underline font-medium text-xs bg-blue-50 px-3 py-1.5 rounded-md">Profil & Pemetaan</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -121,15 +156,16 @@
         }
 
         function bukaDetail(siswa) {
-            const isiModal = document.getElementById("isiModal");
-            isiModal.innerHTML = `
-                <p><strong>Nama Lengkap:</strong> ${siswa.nama}</p>
-                <p><strong>NIS / NISN:</strong> ${siswa.nis}</p>
-                <p><strong>Kelas:</strong> ${siswa.kelas}</p>
-                <p><strong>Guru Wali Bimbingan:</strong> ABD. KHOLIQ, S.Kom</p>
-                <hr class="my-2">
-                <p class="text-xs text-gray-500 italic">Status: Peserta didik aktif dalam kelompok bimbingan berkala.</p>
-            `;
+            document.getElementById("siswaId").value = siswa.id;
+            document.getElementById("modalNama").innerText = siswa.nama;
+            document.getElementById("modalNis").innerText = siswa.nis;
+            document.getElementById("modalKelas").innerText = siswa.kelas;
+
+            document.getElementById("inputGayaBelajar").value = siswa.gayaBelajar || "Visual (Melihat/Gambar)";
+            document.getElementById("inputMinat").value = siswa.minat || "";
+            document.getElementById("inputPotensi").value = siswa.potensi || "";
+            document.getElementById("inputKendala").value = siswa.kendala || "";
+
             document.getElementById("modalDetail").classList.remove("hidden");
         }
 
@@ -137,8 +173,27 @@
             document.getElementById("modalDetail").classList.add("hidden");
         }
 
+        function simpanProfil(event) {
+            event.preventDefault();
+            let idSiswa = parseInt(document.getElementById("siswaId").value);
+            let dataSiswa = JSON.parse(localStorage.getItem("dataSiswaGuruWali")) || defaultSiswa;
+
+            let index = dataSiswa.findIndex(s => s.id === idSiswa);
+            if (index !== -1) {
+                dataSiswa[index].gayaBelajar = document.getElementById("inputGayaBelajar").value;
+                dataSiswa[index].minat = document.getElementById("inputMinat").value;
+                dataSiswa[index].potensi = document.getElementById("inputPotensi").value;
+                dataSiswa[index].kendala = document.getElementById("inputKendala").value;
+
+                localStorage.setItem("dataSiswaGuruWali", JSON.stringify(dataSiswa));
+                muatDataSiswa();
+                tutupModal();
+                alert("Pemetaan profil siswa berhasil diperbarui!");
+            }
+        }
+
         function resetDataDefault() {
-            if(confirm("Kembalikan ke data awal 24 siswa?")) {
+            if(confirm("Kembalikan data ke awal?")) {
                 localStorage.setItem("dataSiswaGuruWali", JSON.stringify(defaultSiswa));
                 muatDataSiswa();
             }
