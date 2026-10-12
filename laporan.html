@@ -5,29 +5,37 @@
     <title>Laporan & Koordinasi - SIM Guru Wali</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Pengaturan khusus saat dicetak/export PDF agar tidak terpotong */
-        @media print {
-            aside, button, .no-print {
-                display: none !important;
-            }
-            body {
-                background: white !important;
-                -webkit-print-color-adjust: exact;
-            }
-            .print-container {
-                border: none !important;
-                box-shadow: none !important;
-                padding: 0 !important;
-                max-width: 100% !important;
-            }
-            tr {
-                page-break-inside: avoid;
-            }
-            thead {
-                display: table-header-group;
-            }
+    /* Pengaturan khusus saat dicetak/export PDF */
+    @media print {
+        @page {
+            size: landscape;
+            margin: 1cm;
         }
-    </style>
+        aside, button, .no-print {
+            display: none !important;
+        }
+        body {
+            background: white !important;
+            -webkit-print-color-adjust: exact;
+            font-size: 11px; /* Memperkecil sedikit ukuran font agar pas */
+        }
+        .print-container {
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            max-width: 100% !important;
+        }
+        table th, table td {
+            padding: 4px 8px !important; /* Membuat baris tabel lebih rapi dan tidak terlalu tinggi */
+        }
+        tr {
+            page-break-inside: avoid;
+        }
+        thead {
+            display: table-header-group;
+        }
+    }
+</style>
 </head>
 <body class="bg-gray-50 font-sans">
     <div class="flex h-screen overflow-hidden">
