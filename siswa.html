@@ -83,9 +83,18 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block font-medium text-gray-700 mb-1">Minat & Bakat</label>
-                            <input type="text" id="inputMinat" placeholder="Misal: Desain Grafis, Fotografi" class="w-full border rounded-lg p-2 text-sm focus:ring focus:ring-blue-200">
+                            <label class="block font-medium text-gray-700 mb-1">Rencana Setelah Lulus (BMW)</label>
+                            <select id="inputRencanaKarir" class="w-full border rounded-lg p-2 text-sm focus:ring focus:ring-blue-200 font-semibold text-blue-700">
+                                <option value="Bekerja">Bekerja di Industri</option>
+                                <option value="Kuliah">Melanjutkan Kuliah</option>
+                                <option value="Wirausaha">Berwirausaha / Mandiri</option>
+                            </select>
                         </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-medium text-gray-700 mb-1">Minat & Bakat</label>
+                        <input type="text" id="inputMinat" placeholder="Misal: Desain Grafis, Fotografi" class="w-full border rounded-lg p-2 text-sm focus:ring focus:ring-blue-200">
                     </div>
 
                     <div>
@@ -109,30 +118,30 @@
 
     <script>
         const defaultSiswa = [
-            { id: 1, no: 1, nama: "DIVA HIDAYATUS SOLIKHA", nis: "13932/0563.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Desain Grafis", potensi: "Kreativitas visual baik", kendala: "Manajemen waktu tugas" },
-            { id: 2, no: 2, nama: "DWI MEILANI SYAFITRI", nis: "13933/0564.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Ilustrasi Digital", potensi: "Tekun dalam praktik", kendala: "Kurang percaya diri" },
-            { id: 3, no: 3, nama: "DWI TIRTA MAULANA", nis: "13934/0565.10", kelas: "X DKV 1", gayaBelajar: "Auditorial (Mendengar)", minat: "Videografi", potensi: "Komunikasi aktif", kendala: "Absensi sering terlambat" },
-            { id: 4, no: 4, nama: "EDLA PUTRI APRILA", nis: "13935/0566.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Desain Karakter", potensi: "Rapi dalam pengerjaan tugas", kendala: "Belum ada kendala berarti" },
-            { id: 5, no: 5, nama: "ELVIERA NATASYA MULIA HAMID", nis: "13936/0567.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Fotografi", potensi: "Cepat memahami materi", kendala: "Fokus mudah teralihkan" },
-            { id: 6, no: 6, nama: "FADIA ZAFIRAH", nis: "13937/0568.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Editor Video", potensi: "Disiplin tinggi", kendala: "Perlu bimbingan intensif teori" },
-            { id: 7, no: 7, nama: "FADILATUN NIKMAH", nis: "13938/0569.10", kelas: "X DKV 1", gayaBelajar: "Auditorial (Mendengar)", minat: "Desain Poster", potensi: "Kerjasama tim baik", kendala: "Pemalu saat presentasi" },
-            { id: 8, no: 8, nama: "FAIQOTUL HIMMAH", nis: "13939/0570.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Animasi 2D", potensi: "Inisiatif tinggi", kendala: "Kendala perangkat di rumah" },
-            { id: 9, no: 9, nama: "FAJARIAN JUNO DJIBRIL", nis: "13940/0571.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", minat: "UI/UX Design", potensi: "Analitis kuat", kendala: "Sering izin sakit" },
-            { id: 10, no: 10, nama: "FAUZIAH NUR AISYAH", nis: "13941/0572.10", kelas: "X DKV 1", gayaBelajar: "Auditorial (Mendengar)", minat: "Ilustrasi", potensi: "Teliti dan rapi", kendala: "Kurang percaya diri" },
-            { id: 11, no: 11, nama: "FAZA NAYLA IKRIMAH", nis: "13942/0573.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Desain Grafis", potensi: "Kreatif", kendala: "Manajemen waktu" },
-            { id: 12, no: 12, nama: "FELLY CALISTA AINI", nis: "13943/0574.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Fotografi", potensi: "Cekatan", kendala: "Fokus belajar" },
-            { id: 13, no: 13, nama: "FHANYSA AQILAH RAHMADANI", nis: "13944/0575.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Desain Web", potensi: "Mandiri", kendala: "Tidak ada" },
-            { id: 14, no: 14, nama: "GITA REZANIA", nis: "13945/0576.10", kelas: "X DKV 2", gayaBelajar: "Auditorial (Mendengar)", minat: "Video Editing", potensi: "Komunikatif", kendala: "Kurang teliti" },
-            { id: 15, no: 15, nama: "IDA AYU AZIZAH", nis: "13946/0577.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Ilustrasi", potensi: "Tekun", kendala: "Sering terlambat" },
-            { id: 16, no: 16, nama: "JIHAN KHUMAIROH", nis: "13947/0578.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Desain Grafis", potensi: "Rapi", kendala: "Kendala tugas" },
-            { id: 17, no: 17, nama: "JOFANI ACHMAD ALFACHRIZI", nis: "13948/0579.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Videografi", potensi: "Aktif praktik", kendala: "Fokus kurang" },
-            { id: 18, no: 18, nama: "KHANSA SALSABILAH ABIDAH", nis: "13949/0580.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Animasi", potensi: "Kreatif tinggi", kendala: "Pemalu" },
-            { id: 19, no: 19, nama: "KHAYLA NAAFI MARITZA", nis: "13950/0581.10", kelas: "X DKV 2", gayaBelajar: "Auditorial (Mendengar)", minat: "Fotografi", potensi: "Kerjasama baik", kendala: "Tidak ada" },
-            { id: 20, no: 20, nama: "LISAH ARIANTI", nis: "13951/0582.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Desain Poster", potensi: "Tekun", kendala: "Kurang percaya diri" },
-            { id: 21, no: 21, nama: "LISAURA MAULIDINA AZZAHRA", nis: "13952/0583.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Ilustrasi Digital", potensi: "Inovatif", kendala: "Manajemen waktu" },
-            { id: 22, no: 22, nama: "M WILDAN FAUZUL KABIR", nis: "13953/0584.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", minat: "Videografi", potensi: "Aktif", kendala: "Sering izin" },
-            { id: 23, no: 23, nama: "M. RIZKY PRATAMA PUTRA", nis: "13954/0585.10", kelas: "X DKV 2", gayaBelajar: "Auditorial (Mendengar)", minat: "Desain Grafis", potensi: "Cepat tanggap", kendala: "Kurang teliti" },
-            { id: 24, no: 24, nama: "MELISA AYU RAHMADANI", nis: "13955/0586.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik (Praktik/Gerak)", minat: "Animasi", potensi: "Rajin", kendala: "Tidak ada" }
+            { id: 1, no: 1, nama: "DIVA HIDAYATUS SOLIKHA", nis: "13932/0563.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", rencanaKarir: "Bekerja", minat: "Desain Grafis", potensi: "Kreativitas visual baik", kendala: "Manajemen waktu tugas" },
+            { id: 2, no: 2, nama: "DWI MEILANI SYAFITRI", nis: "13933/0564.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik (Praktik/Gerak)", rencanaKarir: "Kuliah", minat: "Ilustrasi Digital", potensi: "Tekun dalam praktik", kendala: "Kurang percaya diri" },
+            { id: 3, no: 3, nama: "DWI TIRTA MAULANA", nis: "13934/0565.10", kelas: "X DKV 1", gayaBelajar: "Auditorial (Mendengar)", rencanaKarir: "Wirausaha", minat: "Videografi", potensi: "Komunikasi aktif", kendala: "Absensi sering terlambat" },
+            { id: 4, no: 4, nama: "EDLA PUTRI APRILA", nis: "13935/0566.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", rencanaKarir: "Bekerja", minat: "Desain Karakter", potensi: "Rapi dalam pengerjaan tugas", kendala: "Belum ada kendala berarti" },
+            { id: 5, no: 5, nama: "ELVIERA NATASYA MULIA HAMID", nis: "13936/0567.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik (Praktik/Gerak)", rencanaKarir: "Kuliah", minat: "Fotografi", potensi: "Cepat memahami materi", kendala: "Fokus mudah teralihkan" },
+            { id: 6, no: 6, nama: "FADIA ZAFIRAH", nis: "13937/0568.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", rencanaKarir: "Bekerja", minat: "Editor Video", potensi: "Disiplin tinggi", kendala: "Perlu bimbingan intensif teori" },
+            { id: 7, no: 7, nama: "FADILATUN NIKMAH", nis: "13938/0569.10", kelas: "X DKV 1", gayaBelajar: "Auditorial (Mendengar)", rencanaKarir: "Wirausaha", minat: "Desain Poster", potensi: "Kerjasama tim baik", kendala: "Pemalu saat presentasi" },
+            { id: 8, no: 8, nama: "FAIQOTUL HIMMAH", nis: "13939/0570.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik (Praktik/Gerak)", rencanaKarir: "Kuliah", minat: "Animasi 2D", potensi: "Inisiatif tinggi", kendala: "Kendala perangkat di rumah" },
+            { id: 9, no: 9, nama: "FAJARIAN JUNO DJIBRIL", nis: "13940/0571.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", rencanaKarir: "Bekerja", minat: "UI/UX Design", potensi: "Analitis kuat", kendala: "Sering izin sakit" },
+            { id: 10, no: 10, nama: "FAUZIAH NUR AISYAH", nis: "13941/0572.10", kelas: "X DKV 1", gayaBelajar: "Auditorial (Mendengar)", rencanaKarir: "Kuliah", minat: "Ilustrasi", potensi: "Teliti dan rapi", kendala: "Kurang percaya diri" },
+            { id: 11, no: 11, nama: "FAZA NAYLA IKRIMAH", nis: "13942/0573.10", kelas: "X DKV 1", gayaBelajar: "Visual (Melihat/Gambar)", rencanaKarir: "Wirausaha", minat: "Desain Grafis", potensi: "Kreatif", kendala: "Manajemen waktu" },
+            { id: 12, no: 12, nama: "FELLY CALISTA AINI", nis: "13943/0574.10", kelas: "X DKV 1", gayaBelajar: "Kinestetik (Praktik/Gerak)", rencanaKarir: "Bekerja", minat: "Fotografi", potensi: "Cekatan", kendala: "Fokus belajar" },
+            { id: 13, no: 13, nama: "FHANYSA AQILAH RAHMADANI", nis: "13944/0575.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", rencanaKarir: "Kuliah", minat: "Desain Web", potensi: "Mandiri", kendala: "Tidak ada" },
+            { id: 14, no: 14, nama: "GITA REZANIA", nis: "13945/0576.10", kelas: "X DKV 2", gayaBelajar: "Auditorial (Mendengar)", rencanaKarir: "Bekerja", minat: "Video Editing", potensi: "Komunikatif", kendala: "Kurang teliti" },
+            { id: 15, no: 15, nama: "IDA AYU AZIZAH", nis: "13946/0577.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik (Praktik/Gerak)", rencanaKarir: "Wirausaha", minat: "Ilustrasi", potensi: "Tekun", kendala: "Sering terlambat" },
+            { id: 16, no: 16, nama: "JIHAN KHUMAIROH", nis: "13947/0578.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", rencanaKarir: "Bekerja", minat: "Desain Grafis", potensi: "Rapi", kendala: "Kendala tugas" },
+            { id: 17, no: 17, nama: "JOFANI ACHMAD ALFACHRIZI", nis: "13948/0579.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik (Praktik/Gerak)", rencanaKarir: "Bekerja", minat: "Videografi", potensi: "Aktif praktik", kendala: "Fokus kurang" },
+            { id: 18, no: 18, nama: "KHANSA SALSABILAH ABIDAH", nis: "13949/0580.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", rencanaKarir: "Kuliah", minat: "Animasi", potensi: "Kreatif tinggi", kendala: "Pemalu" },
+            { id: 19, no: 19, nama: "KHAYLA NAAFI MARITZA", nis: "13950/0581.10", kelas: "X DKV 2", gayaBelajar: "Auditorial (Mendengar)", rencanaKarir: "Wirausaha", minat: "Fotografi", potensi: "Kerjasama baik", kendala: "Tidak ada" },
+            { id: 20, no: 20, nama: "LISAH ARIANTI", nis: "13951/0582.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", rencanaKarir: "Bekerja", minat: "Desain Poster", potensi: "Tekun", kendala: "Kurang percaya diri" },
+            { id: 21, no: 21, nama: "LISAURA MAULIDINA AZZAHRA", nis: "13952/0583.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik (Praktik/Gerak)", rencanaKarir: "Kuliah", minat: "Ilustrasi Digital", potensi: "Inovatif", kendala: "Manajemen waktu" },
+            { id: 22, no: 22, nama: "M WILDAN FAUZUL KABIR", nis: "13953/0584.10", kelas: "X DKV 2", gayaBelajar: "Visual (Melihat/Gambar)", rencanaKarir: "Bekerja", minat: "Videografi", potensi: "Aktif", kendala: "Sering izin" },
+            { id: 23, no: 23, nama: "M. RIZKY PRATAMA PUTRA", nis: "13954/0585.10", kelas: "X DKV 2", gayaBelajar: "Auditorial (Mendengar)", rencanaKarir: "Wirausaha", minat: "Desain Grafis", potensi: "Cepat tanggap", kendala: "Kurang teliti" },
+            { id: 24, no: 24, nama: "MELISA AYU RAHMADANI", nis: "13955/0586.10", kelas: "X DKV 2", gayaBelajar: "Kinestetik (Praktik/Gerak)", rencanaKarir: "Bekerja", minat: "Animasi", potensi: "Rajin", kendala: "Tidak ada" }
         ];
 
         function muatDataSiswa() {
@@ -162,6 +171,7 @@
             document.getElementById("modalKelas").innerText = siswa.kelas;
 
             document.getElementById("inputGayaBelajar").value = siswa.gayaBelajar || "Visual (Melihat/Gambar)";
+            document.getElementById("inputRencanaKarir").value = siswa.rencanaKarir || "Bekerja";
             document.getElementById("inputMinat").value = siswa.minat || "";
             document.getElementById("inputPotensi").value = siswa.potensi || "";
             document.getElementById("inputKendala").value = siswa.kendala || "";
@@ -181,6 +191,7 @@
             let index = dataSiswa.findIndex(s => s.id === idSiswa);
             if (index !== -1) {
                 dataSiswa[index].gayaBelajar = document.getElementById("inputGayaBelajar").value;
+                dataSiswa[index].rencanaKarir = document.getElementById("inputRencanaKarir").value;
                 dataSiswa[index].minat = document.getElementById("inputMinat").value;
                 dataSiswa[index].potensi = document.getElementById("inputPotensi").value;
                 dataSiswa[index].kendala = document.getElementById("inputKendala").value;
@@ -201,7 +212,7 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             if (!localStorage.getItem("dataSiswaGuruWali")) {
-                localStorage.setItem("dataSiswaGuruWali", JSON.stringify(defaultSiswa));
+                localStorage.setItem("dataSisiwaGuruWali", JSON.stringify(defaultSiswa));
             }
             muatDataSiswa();
         });
