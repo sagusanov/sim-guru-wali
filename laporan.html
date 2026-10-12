@@ -5,22 +5,26 @@
     <title>Laporan & Koordinasi - SIM Guru Wali</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Pengaturan khusus saat dicetak/export PDF */
+        /* Pengaturan khusus saat dicetak/export PDF agar tidak terpotong */
         @media print {
             aside, button, .no-print {
                 display: none !important;
             }
-            main {
-                padding: 0 !important;
-                margin: 0 !important;
-            }
             body {
                 background: white !important;
+                -webkit-print-color-adjust: exact;
             }
             .print-container {
                 border: none !important;
                 box-shadow: none !important;
                 padding: 0 !important;
+                max-width: 100% !important;
+            }
+            tr {
+                page-break-inside: avoid;
+            }
+            thead {
+                display: table-header-group;
             }
         }
     </style>
@@ -49,7 +53,7 @@
         <main class="flex-1 overflow-y-auto p-8">
             <div class="max-w-4xl mx-auto bg-white rounded-xl border shadow-sm p-8 print-container">
                 
-                <!-- KOP LAPORAN (Hanya tampil saat dicetak/dilihat) -->
+                <!-- KOP LAPORAN -->
                 <div class="text-center border-b pb-4 mb-6">
                     <h2 class="text-xl font-bold text-gray-800 uppercase">Laporan Rekapitulasi Pembinaan Guru Wali</h2>
                     <p class="text-sm text-gray-600">SMKN 1 Bangil - Tahun Pelajaran 2026/2027</p>
@@ -61,7 +65,7 @@
                         <p><strong>Kelas Binaan:</strong> X DKV 1 & X DKV 2</p>
                     </div>
                     <div>
-                        <p><strong>Jumlah Peserta Didik:</strong> 24 Siswa</p>
+                        <p><strong>Jumlah Peserta Didik:</strong> <span id="jmlSiswa">24</span> Siswa</p>
                         <p><strong>Tanggal Cetak:</strong> <span id="tanggalCetak"></span></p>
                     </div>
                 </div>
@@ -87,12 +91,12 @@
                     <table class="w-full text-left border-collapse text-xs">
                         <thead>
                             <tr class="border-b bg-gray-100 text-gray-700">
-                                <th class="p-2 border">No</th>
+                                <th class="p-2 border w-10">No</th>
                                 <th class="p-2 border">Nama Siswa</th>
-                                <th class="p-2 border">Kelas</th>
-                                <th class="p-2 border">Gaya Belajar</th>
-                                <th class="p-2 border">Rencana Karir</th>
-                                <th class="p-2 border">Minat / Kendala Catatan</th>
+                                <th class="p-2 border w-20">Kelas</th>
+                                <th class="p-2 border w-24">Gaya Belajar</th>
+                                <th class="p-2 border w-24">Rencana Karir</th>
+                                <th class="p-2 border">Minat & Kendala</th>
                             </tr>
                         </thead>
                         <tbody id="tabelRekapLaporan">
@@ -103,14 +107,14 @@
 
                 <!-- TOMBOL CETAK -->
                 <div class="flex justify-between items-center no-print border-t pt-4">
-                    <p class="text-xs text-gray-500">Klik tombol di samping untuk mengunduh atau mencetak laporan ke PDF.</p>
+                    <p class="text-xs text-gray-500">Klik tombol di samping untuk mencetak atau menyimpan laporan ke PDF.</p>
                     <button onclick="window.print()" class="bg-blue-600 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 shadow flex items-center gap-2">
                         🖨️ Cetak Laporan (PDF)
                     </button>
                 </div>
 
-                <!-- TANDA TANGAN (Format Cetak) -->
-                <div class="hidden print:flex justify-between mt-12 text-sm text-center">
+                <!-- TANDA TANGAN -->
+                <div class="flex justify-between mt-12 text-sm text-center page-break">
                     <div>
                         <p>Mengetahui,</p>
                         <p>Kepala SMKN 1 Bangil</p>
@@ -162,11 +166,11 @@
         document.addEventListener("DOMContentLoaded", () => {
             let dataSiswa = JSON.parse(localStorage.getItem("dataSiswaGuruWali")) || defaultSiswa;
             
-            // Tanggal hari ini
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             const tglStr = new Date().toLocaleDateString('id-ID', options);
             document.getElementById("tanggalCetak").innerText = tglStr;
             document.getElementById("tglTtd").innerText = tglStr;
+            document.getElementById("jmlSiswa").innerText = dataSiswa.length;
 
             // Hitung statistik BMW
             let countBekerja = dataSiswa.filter(s => s.rencanaKarir === "Bekerja").length;
@@ -186,7 +190,7 @@
                     <td class="p-2 border text-center">${index + 1}</td>
                     <td class="p-2 border font-medium">${siswa.nama}</td>
                     <td class="p-2 border text-center">${siswa.kelas}</td>
-                    <td class="p-2 border">${siswa.gayaBelajar || '-'}</td>
+                    <td class="p-2 border">${siswa.gayaBelajar || 'Visual'}</td>
                     <td class="p-2 border font-semibold text-blue-700">${siswa.rencanaKarir || 'Bekerja'}</td>
                     <td class="p-2 border">Minat: ${siswa.minat || '-'}<br><span class="text-red-600">Kendala: ${siswa.kendala || '-'}</span></td>
                 `;
