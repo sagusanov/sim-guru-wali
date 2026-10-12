@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Log Mentorship & Konseling - Guru Wali SMK</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- SIDEBAR -->
+        <aside class="w-64 bg-white border-r flex flex-col justify-between">
+            <div class="p-6">
+                <h1 class="text-xl font-bold text-blue-600">SIM Guru Wali</h1>
+                <p class="text-xs text-gray-500 mt-1">SMKN 1 Bangil</p>
+                <nav class="mt-8 space-y-2">
+                    <a href="index.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50">Dashboard Utama</a>
+                    <a href="siswa.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50">Data Siswa Bimbingan</a>
+                    <a href="mentorship.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-blue-50 text-blue-600 font-medium">Log Mentorship</a>
+                    <a href="kompetensi.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50">Kompetensi & Karakter</a>
+                    <a href="laporan.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50">Laporan & Koordinasi</a>
+                </nav>
+            </div>
+            <div class="p-4 border-t text-xs text-gray-500">
+                Wali: <strong>ABD. KHOLIQ, S.Kom</strong>
+            </div>
+        </aside>
+
+        <!-- KONTEN UTAMA -->
+        <main class="flex-1 overflow-y-auto p-8">
+            <h2 class="text-2xl font-bold text-gray-800">Log Mentorship & Konseling Ringan</h2>
+            <p class="text-gray-600 mt-1">Pencatatan sesi bimbingan personal dan penanganan lini pertama untuk 24 siswa binaan.</p>
+            
+            <!-- FORM INPUT -->
+            <div class="bg-white rounded-xl border shadow-sm mt-6 p-6">
+                <h3 class="font-bold text-gray-700 mb-4">Tambah Catatan Konseling Baru</h3>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Tanggal Sesi</label>
+                        <input type="date" id="tanggal" class="w-full border p-2 rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Pilih Siswa</label>
+                        <select id="pilihSiswa" class="w-full border p-2 rounded-lg text-sm">
+                            <option value="">-- Pilih Siswa --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Topik / Permasalahan & Hasil Diskusi</label>
+                    <textarea id="topik" placeholder="Tuliskan catatan bimbingan, kendala, atau solusi..." class="w-full border p-2 rounded-lg text-sm h-24"></textarea>
+                </div>
+                <button onclick="simpanLog()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700">Simpan Log Mentorship</button>
+            </div>
+
+            <!-- TABEL RIWAYAT LOG -->
+            <div class="bg-white rounded-xl border shadow-sm mt-6 p-6">
+                <h3 class="font-bold text-gray-700 mb-4">Riwayat Log Mentorship Tersimpan</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b text-sm text-gray-500 bg-gray-50">
+                                <th class="p-3">Tanggal</th>
+                                <th class="p-3">Nama Siswa</th>
+                                <th class="p-3">Topik / Catatan Konseling</th>
+                                <th class="p-3">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelLog" class="text-sm divide-y">
+                            <!-- Dimuat via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Data default 24 siswa untuk sinkronisasi dropdown
+        const defaultSiswa = [
+            { nama: "DIVA HIDAYATUS SOLIKHA", kelas: "X DKV 1" },
+            { nama: "DWI MEILANI SYAFITRI", kelas: "X DKV 1" },
+            { nama: "DWI TIRTA MAULANA", kelas: "X DKV 1" },
+            { nama: "EDLA PUTRI APRILA", kelas: "X DKV 1" },
+            { nama: "ELVIERA NATASYA MULIA HAMID", kelas: "X DKV 1" },
+            { nama: "FADIA ZAFIRAH", kelas: "X DKV 1" },
+            { nama: "FADILATUN NIKMAH", kelas: "X DKV 1" },
+            { nama: "FAIQOTUL HIMMAH", kelas: "X DKV 1" },
+            { nama: "FAJARIAN JUNO DJIBRIL", kelas: "X DKV 1" },
+            { nama: "FAUZIAH NUR AISYAH", kelas: "X DKV 1" },
+            { nama: "FAZA NAYLA IKRIMAH", kelas: "X DKV 1" },
+            { nama: "FELLY CALISTA AINI", kelas: "X DKV 1" },
+            { nama: "FHANYSA AQILAH RAHMADANI", kelas: "X DKV 2" },
+            { nama: "GITA REZANIA", kelas: "X DKV 2" },
+            { nama: "IDA AYU AZIZAH", kelas: "X DKV 2" },
+            { nama: "JIHAN KHUMAIROH", kelas: "X DKV 2" },
+            { nama: "JOFANI ACHMAD ALFACHRIZI", kelas: "X DKV 2" },
+            { nama: "KHANSA SALSABILAH ABIDAH", kelas: "X DKV 2" },
+            { nama: "KHAYLA NAAFI MARITZA", kelas: "X DKV 2" },
+            { nama: "LISAH ARIANTI", kelas: "X DKV 2" },
+            { nama: "LISAURA MAULIDINA AZZAHRA", kelas: "X DKV 2" },
+            { nama: "M WILDAN FAUZUL KABIR", kelas: "X DKV 2" },
+            { nama: "M. RIZKY PRATAMA PUTRA", kelas: "X DKV 2" },
+            { nama: "MELISA AYU RAHMADANI", kelas: "X DKV 2" }
+        ];
+
+        function muatDropdownSiswa() {
+            const select = document.getElementById("pilihSiswa");
+            defaultSiswaforEach = defaultSiswa.forEach(s => {
+                let opt = document.createElement("option");
+                opt.value = s.nama + " (" + s.kelas + ")";
+                opt.textContent = s.nama + " (" + s.kelas + ")";
+                select.appendChild(opt);
+            });
+        }
+
+        function simpanLog() {
+            const tanggal = document.getElementById("tanggal").value;
+            const siswa = document.getElementById("pilihSiswa").value;
+            const topik = document.getElementById("topik").value;
+
+            if(!tanggal || !siswa || !topik) {
+                alert("Harap lengkapi tanggal, pilih siswa, dan isi topik konseling!");
+                return;
+            }
+
+            let logList = JSON.parse(localStorage.getItem("logMentorshipGuruWali")) || [];
+            logList.push({ tanggal, siswa, topik });
+            localStorage.setItem("logMentorshipGuruWali", JSON.stringify(logList));
+
+            document.getElementById("topik").value = "";
+            document.getElementById("pilihSiswa").value = "";
+            document.getElementById("tanggal").value = "";
+            muatTabelLog();
+            alert("Log mentorship berhasil disimpan!");
+        }
+
+        function muatTabelLog() {
+            let logList = JSON.parse(localStorage.getItem("logMentorshipGuruWali")) || [];
+            const tbody = document.getElementById("tabelLog");
+            tbody.innerHTML = "";
+
+            if(logList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400 text-sm">Belum ada catatan log mentorship.</td></tr>`;
+                return;
+            }
+
+            logList.forEach((log, index) => {
+                let tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td class="p-3 text-gray-600">${log.tanggal}</td>
+                    <td class="p-3 font-medium text-gray-800">${log.siswa}</td>
+                    <td class="p-3 text-gray-600">${log.topik}</td>
+                    <td class="p-3"><button onclick="hapusLog(${index})" class="text-red-600 hover:underline text-xs">Hapus</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function hapusLog(index) {
+            if(confirm("Hapus catatan log ini?")) {
+                let logList = JSON.parse(localStorage.getItem("logMentorshipGuruWali")) || [];
+                logList.splice(index, 1);
+                localStorage.setItem("logMentorshipGuruWali", JSON.stringify(logList));
+                muatTabelLog();
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            muatDropdownSiswa();
+            muatTabelLog();
+        });
+    </script>
+</body>
+</html>

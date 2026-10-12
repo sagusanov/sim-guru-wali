@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Utama - Guru Wali SMK</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #e0e7ff;
+            --bg-main: #f3f4f6;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --white: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        body { display: flex; height: 100vh; background-color: var(--bg-main); color: var(--text-main); overflow: hidden; }
+        
+        /* SIDEBAR MODERN */
+        aside { width: 280px; background: var(--white); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; box-shadow: 4px 0 24px rgba(0,0,0,0.02); }
+        .sidebar-header { padding: 28px 24px 20px 24px; }
+        .brand-wrapper { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+        .brand-icon { width: 38px; height: 38px; background: var(--primary-light); color: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; }
+        .sidebar-header h1 { font-size: 1.15rem; font-weight: 700; color: #111827; letter-spacing: -0.3px; }
+        .sidebar-header p { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; margin-left: 50px; }
+        
+        nav { margin-top: 24px; display: flex; flex-direction: column; gap: 6px; padding: 0 16px; }
+        nav a { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; text-decoration: none; font-size: 0.875rem; color: #4b5563; font-weight: 600; transition: all 0.2s ease; }
+        nav a:hover { background-color: #f9fafb; color: var(--primary); }
+        nav a.active { background-color: var(--primary-light); color: var(--primary); }
+        
+        .sidebar-footer { padding: 20px 24px; border-top: 1px solid var(--border-color); background: #fafafa; }
+        .user-profile { font-size: 0.75rem; color: var(--text-muted); }
+        .user-profile strong { display: block; font-size: 0.85rem; color: #111827; margin-top: 2px; }
+        
+        /* MAIN CONTENT MODERN */
+        main { flex: 1; overflow-y: auto; padding: 40px; }
+        .header-welcome { margin-bottom: 32px; }
+        .header-welcome h2 { font-size: 1.75rem; font-weight: 700; color: #111827; letter-spacing: -0.5px; }
+        .header-welcome p { font-size: 0.95rem; color: var(--text-muted); margin-top: 6px; }
+        
+        /* GRID STATS */
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 32px; }
+        .card { background: var(--white); padding: 24px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.01); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .card-header p { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .card-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+        
+        .card h3 { font-size: 2rem; font-weight: 700; color: #111827; }
+        .text-blue { color: #4f46e5; }
+        .text-green { color: #059669; }
+        .text-purple { color: #7c3aed; }
+        
+        .bg-blue-soft { background: #e0e7ff; color: #4f46e5; }
+        .bg-green-soft { background: #d1fae5; color: #059669; }
+        .bg-purple-soft { background: #ede9fe; color: #7c3aed; }
+
+        /* QUICK ACTIONS / INFO SECTION */
+        .info-card { background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); color: white; padding: 32px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.3); display: flex; justify-content: space-between; align-items: center; }
+        .info-content h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
+        .info-content p { font-size: 0.9rem; opacity: 0.9; max-width: 600px; line-height: 1.5; }
+        .info-action { background: white; color: var(--primary); padding: 12px 24px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 0.875rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background 0.2s; }
+        .info-action:hover { background: #f9fafb; }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside>
+        <div>
+            <div class="sidebar-header">
+                <div class="brand-wrapper">
+                    <div class="brand-icon">GW</div>
+                    <h1>SIM Guru Wali</h1>
+                </div>
+                <p>SMKN 1 Bangil</p>
+            </div>
+            <nav>
+                <a href="index.html" class="active">Dashboard Utama</a>
+                <a href="siswa.html">Data Siswa Bimbingan</a>
+                <a href="mentorship.html">Log Mentorship</a>
+                <a href="kompetensi.html">Kompetensi & Karakter</a>
+                <a href="laporan.html">Laporan & Koordinasi</a>
+            </nav>
+        </div>
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                Wali Bimbingan:
+                <strong>ABD. KHOLIQ, S.Kom</strong>
+            </div>
+        </div>
+    </aside>
+
+    <!-- KONTEN UTAMA -->
+    <main>
+        <div class="header-welcome">
+            <h2>Dashboard Utama</h2>
+            <p>Sistem Informasi Pendampingan & Mentorship Peserta Didik Berkelanjutan.</p>
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <p>Total Siswa</p>
+                    <div class="card-icon bg-blue-soft">👥</div>
+                </div>
+                <h3 class="text-blue">24</h3>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <p>Kelas Binaan</p>
+                    <div class="card-icon bg-green-soft">🏫</div>
+                </div>
+                <h3 class="text-green" style="font-size: 1.35rem; margin-top: 6px;">X DKV 1 & 2</h3>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <p>Status Sistem</p>
+                    <div class="card-icon bg-purple-soft">⚡</div>
+                </div>
+                <h3 class="text-purple" style="font-size: 1.35rem; margin-top: 6px;">Online / Sinkron</h3>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="info-content">
+                <h3>Fokus Pendampingan Guru Wali SMK</h3>
+                <p>Mendampingi peserta didik secara berkelanjutan mulai dari kelas X hingga lulus, mencakup pemantauan akademik, pembentukan budaya kerja industri, penanganan lini pertama, serta penguatan portofolio kejuruan DKV.</p>
+            </div>
+            <a href="siswa.html" class="info-action">Kelola Data Siswa &rarr;</a>
+        </div>
+    </main>
+
+</body>
+</html>
